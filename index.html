@@ -54,6 +54,31 @@ body {
     z-index: 3;
 }
 
+.sparkle {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+    pointer-events: none;
+    box-shadow:
+        0 0 8px white,
+        0 0 16px hotpink,
+        0 0 24px hotpink;
+    animation: sparkle 2s linear forwards;
+}
+
+@keyframes sparkle {
+    from {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-150px) scale(0);
+        opacity: 0;
+    }
+}
+
 @keyframes spin {
     from {
         transform: translate(-50%, -50%) rotate(0deg);
@@ -75,5 +100,30 @@ body {
 
 <img src="shaphan.png" class="corner" alt="Corner">
 
+    <audio id="bgmusic" loop>
+    <source src="agas.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+document.addEventListener("click", () => {
+    document.getElementById("bgmusic").play();
+}, { once: true });
+</script>
+
+<script>
+function createSparkle() {
+    const sparkle = document.createElement("div");
+    sparkle.className = "sparkle";
+
+    sparkle.style.left = Math.random() * window.innerWidth + "px";
+    sparkle.style.top = Math.random() * window.innerHeight + "px";
+
+    document.body.appendChild(sparkle);
+
+    setTimeout(() => sparkle.remove(), 2000);
+}
+
+setInterval(createSparkle, 120);
+</script>
 </body>
 </html>
