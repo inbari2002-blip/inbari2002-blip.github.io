@@ -83,6 +83,8 @@ nav {
     display: none;
     padding-top: 70px;
     min-height: 100vh;
+    position: relative;
+    z-index: 1;
 }
 
 .page.active {
@@ -132,7 +134,7 @@ nav {
     right: 20px;
     width: 200px;
     height: auto;
-    z-index: 3;
+    z-index: 500;
     cursor: pointer;
     transition: transform 0.2s ease;
     touch-action: manipulation;
@@ -168,6 +170,7 @@ nav {
         0 0 16px #ff1493,
         0 0 24px #ff1493;
     animation: sparkle 2s linear forwards;
+    z-index: 999;
 }
 
 .burst-sparkle {
@@ -180,6 +183,7 @@ nav {
     box-shadow:
         0 0 10px #ff1493,
         0 0 20px #ff1493;
+    z-index: 999;
 }
 
 @keyframes sparkle {
@@ -198,6 +202,9 @@ nav {
     max-width: 1000px;
     margin: 0 auto;
     padding: 40px 20px;
+    background: rgba(10, 10, 10, 0.8);
+    position: relative;
+    z-index: 2;
 }
 
 .page-title {
@@ -477,7 +484,7 @@ document.addEventListener("click", () => {
     document.getElementById("bgmusic").play().catch(() => {});
 }, { once: true });
 
-// Sparkles
+// Sparkles - create continuously on all pages
 function createSparkle() {
     const sparkle = document.createElement("div");
     sparkle.className = "sparkle";
@@ -487,53 +494,59 @@ function createSparkle() {
     setTimeout(() => sparkle.remove(), 2000);
 }
 
+// Create sparkles every 120ms on all pages
 setInterval(createSparkle, 120);
 
 // Shaphan burst effect
-document.getElementById("shaphan").addEventListener("click", function(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    
-    const shaphanRect = this.getBoundingClientRect();
-    const centerX = shaphanRect.left + shaphanRect.width / 2;
-    const centerY = shaphanRect.top + shaphanRect.height / 2;
-    
-    for (let i = 0; i < 12; i++) {
-        const angle = (i / 12) * Math.PI * 2;
-        const distance = 150;
-        const tx = Math.cos(angle) * distance;
-        const ty = Math.sin(angle) * distance;
-        
-        const sparkle = document.createElement("div");
-        sparkle.className = "burst-sparkle";
-        sparkle.style.left = centerX + "px";
-        sparkle.style.top = centerY + "px";
-        document.body.appendChild(sparkle);
-        
-        let elapsed = 0;
-        const startTime = Date.now();
-        const duration = 1000;
-        
-        function animate() {
-            elapsed = Date.now() - startTime;
-            const progress = elapsed / duration;
+document.addEventListener('DOMContentLoaded', () => {
+    const shaphan = document.getElementById("shaphan");
+    if (shaphan) {
+        shaphan.addEventListener("click", function(e) {
+            e.stopPropagation();
+            e.preventDefault();
             
-            if (progress < 1) {
-                const currentTx = tx * progress;
-                const currentTy = ty * progress;
-                const scale = 1 - progress;
-                const opacity = 1 - progress;
+            const shaphanRect = this.getBoundingClientRect();
+            const centerX = shaphanRect.left + shaphanRect.width / 2;
+            const centerY = shaphanRect.top + shaphanRect.height / 2;
+            
+            for (let i = 0; i < 12; i++) {
+                const angle = (i / 12) * Math.PI * 2;
+                const distance = 150;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance;
                 
-                sparkle.style.transform = `translate(${currentTx}px, ${currentTy}px) scale(${scale})`;
-                sparkle.style.opacity = opacity;
+                const sparkle = document.createElement("div");
+                sparkle.className = "burst-sparkle";
+                sparkle.style.left = centerX + "px";
+                sparkle.style.top = centerY + "px";
+                document.body.appendChild(sparkle);
                 
-                requestAnimationFrame(animate);
-            } else {
-                sparkle.remove();
+                let elapsed = 0;
+                const startTime = Date.now();
+                const duration = 1000;
+                
+                function animate() {
+                    elapsed = Date.now() - startTime;
+                    const progress = elapsed / duration;
+                    
+                    if (progress < 1) {
+                        const currentTx = tx * progress;
+                        const currentTy = ty * progress;
+                        const scale = 1 - progress;
+                        const opacity = 1 - progress;
+                        
+                        sparkle.style.transform = `translate(${currentTx}px, ${currentTy}px) scale(${scale})`;
+                        sparkle.style.opacity = opacity;
+                        
+                        requestAnimationFrame(animate);
+                    } else {
+                        sparkle.remove();
+                    }
+                }
+                
+                animate();
             }
-        }
-        
-        animate();
+        });
     }
 });
 
