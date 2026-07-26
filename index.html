@@ -6,45 +6,126 @@
 <title>kacki.store</title>
 
 <style>
-html, body {
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
     width: 100%;
     height: 100%;
+    font-family: Arial, sans-serif;
+    background: #0a0a0a;
+    color: #fff;
+}
+
+/* Navigation */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(10, 10, 10, 0.95);
+    padding: 15px 20px;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #ff1493;
+}
+
+.nav-brand {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff1493;
+    text-shadow: 0 0 10px #ff1493;
+    cursor: pointer;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+    cursor: pointer;
+}
+
+.nav-links a:hover {
+    color: #ff1493;
+    text-shadow: 0 0 10px #ff1493;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background: #ff1493;
+    margin: 5px 0;
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
+/* Pages */
+.page {
+    display: none;
+    padding-top: 70px;
+    min-height: 100vh;
+}
+
+.page.active {
+    display: block;
+}
+
+/* Home Page */
+#home {
+    position: relative;
     overflow: hidden;
 }
 
-body {
-    background: black;
-    font-family: Arial, sans-serif;
-}
-
-/* Full-screen background image */
 .background {
     position: fixed;
     inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    z-index: 1;
+    top: 0;
 }
 
-/* Pink spinning text */
+.home-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 70px);
+}
+
 .text {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     font-size: 70px;
     font-weight: bold;
-    color: hotpink;
+    color: #ff1493;
     text-shadow:
-        0 0 10px hotpink,
-        0 0 20px hotpink,
-        0 0 40px hotpink;
+        0 0 10px #ff1493,
+        0 0 20px #ff1493,
+        0 0 40px #ff1493;
     animation: spin 4s linear infinite;
-    z-index: 2;
+    text-align: center;
 }
 
-/* Bottom-right image */
 .corner {
     position: fixed;
     bottom: 20px;
@@ -65,6 +146,16 @@ body {
     transform: scale(0.95);
 }
 
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Sparkles */
 .sparkle {
     position: fixed;
     width: 8px;
@@ -74,8 +165,8 @@ body {
     pointer-events: none;
     box-shadow:
         0 0 8px white,
-        0 0 16px hotpink,
-        0 0 24px hotpink;
+        0 0 16px #ff1493,
+        0 0 24px #ff1493;
     animation: sparkle 2s linear forwards;
 }
 
@@ -83,12 +174,12 @@ body {
     position: fixed;
     width: 10px;
     height: 10px;
-    background: hotpink;
+    background: #ff1493;
     border-radius: 50%;
     pointer-events: none;
     box-shadow:
-        0 0 10px hotpink,
-        0 0 20px hotpink;
+        0 0 10px #ff1493,
+        0 0 20px #ff1493;
 }
 
 @keyframes sparkle {
@@ -102,12 +193,179 @@ body {
     }
 }
 
-@keyframes spin {
-    from {
-        transform: translate(-50%, -50%) rotate(0deg);
+/* Form Pages */
+.page-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.page-title {
+    font-size: 48px;
+    font-weight: bold;
+    color: #ff1493;
+    text-shadow: 0 0 10px #ff1493;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.form-container {
+    background: rgba(30, 30, 30, 0.9);
+    border: 2px solid #ff1493;
+    border-radius: 10px;
+    padding: 30px;
+    margin-bottom: 40px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #ff1493;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255, 20, 147, 0.1);
+    border: 1px solid #ff1493;
+    border-radius: 5px;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #ff1493;
+    opacity: 0.6;
+}
+
+.submit-btn {
+    background: linear-gradient(135deg, #ff1493, #ff69b4);
+    color: #fff;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 0 15px #ff1493;
+}
+
+.submit-btn:hover {
+    box-shadow: 0 0 25px #ff1493;
+    transform: scale(1.05);
+}
+
+.submit-btn:active {
+    transform: scale(0.98);
+}
+
+/* Messages Display */
+.messages-container {
+    display: grid;
+    gap: 20px;
+}
+
+.message-card {
+    background: rgba(30, 30, 30, 0.9);
+    border-left: 4px solid #ff1493;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(255, 20, 147, 0.3);
+}
+
+.message-name {
+    color: #ff1493;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.message-email {
+    color: #ff69b4;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.message-text {
+    color: #fff;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.message-time {
+    color: #999;
+    font-size: 12px;
+}
+
+.no-messages {
+    text-align: center;
+    color: #ff1493;
+    padding: 40px 20px;
+    font-size: 18px;
+}
+
+/* Audio */
+audio {
+    display: none;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: rgba(10, 10, 10, 0.95);
+        padding: 20px;
+        gap: 15px;
+        border-bottom: 2px solid #ff1493;
     }
-    to {
-        transform: translate(-50%, -50%) rotate(360deg);
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .text {
+        font-size: 48px;
+    }
+
+    .page-title {
+        font-size: 36px;
+    }
+
+    .corner {
+        width: 150px;
+        bottom: 10px;
+        right: 10px;
+    }
+
+    .form-container {
+        padding: 20px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        font-size: 16px;
     }
 }
 </style>
@@ -115,42 +373,141 @@ body {
 
 <body>
 
-<img src="picture.jpg" class="background" alt="Background">
+<!-- Navigation -->
+<nav>
+    <div class="nav-brand" onclick="showPage('home')">kacki.store</div>
+    <ul class="nav-links" id="navLinks">
+        <li><a onclick="showPage('home')">Home</a></li>
+        <li><a onclick="showPage('quotes')">ציטוטים</a></li>
+        <li><a onclick="showPage('messages')">Messages</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</nav>
 
-<div class="text">
-    #rishonrishon
+<!-- Home Page -->
+<div id="home" class="page active">
+    <img src="picture.jpg" class="background" alt="Background">
+    <div class="home-content">
+        <div class="text">#rishonrishon</div>
+    </div>
+    <img src="shaphan.png" class="corner" alt="Corner" id="shaphan">
 </div>
 
-<img src="shaphan.png" class="corner" alt="Corner" id="shaphan">
+<!-- Quotes Page -->
+<div id="quotes" class="page">
+    <div class="page-content">
+        <h1 class="page-title">ציטוטים</h1>
+        
+        <div class="form-container">
+            <form id="quotesForm">
+                <div class="form-group">
+                    <label for="quoteName">Name</label>
+                    <input type="text" id="quoteName" placeholder="Your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="quoteEmail">Email</label>
+                    <input type="email" id="quoteEmail" placeholder="Your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="quoteText">Quote</label>
+                    <textarea id="quoteText" placeholder="Share your quote..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Submit Quote</button>
+            </form>
+        </div>
 
+        <h2 style="color: #ff1493; margin-top: 40px; margin-bottom: 20px;">Submitted Quotes</h2>
+        <div class="messages-container" id="quotesDisplay">
+            <div class="no-messages">No quotes yet. Be the first!</div>
+        </div>
+    </div>
+</div>
+
+<!-- Messages Page -->
+<div id="messages" class="page">
+    <div class="page-content">
+        <h1 class="page-title">Messages</h1>
+        
+        <div class="form-container">
+            <form id="messagesForm">
+                <div class="form-group">
+                    <label for="msgName">Name</label>
+                    <input type="text" id="msgName" placeholder="Your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="msgEmail">Email</label>
+                    <input type="email" id="msgEmail" placeholder="Your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="msgText">Message</label>
+                    <textarea id="msgText" placeholder="Your message..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
+
+        <h2 style="color: #ff1493; margin-top: 40px; margin-bottom: 20px;">Messages</h2>
+        <div class="messages-container" id="messagesDisplay">
+            <div class="no-messages">No messages yet.</div>
+        </div>
+    </div>
+</div>
+
+<!-- Audio -->
 <audio id="bgmusic" loop>
     <source src="agas.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-document.addEventListener("click", () => {
-    document.getElementById("bgmusic").play();
-}, { once: true });
-</script>
+// Navigation
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
 
-<script>
+hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+});
+
+// Close menu when link is clicked
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+    });
+});
+
+// Page Navigation
+function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+    });
+    document.getElementById(pageId).classList.add('active');
+    navLinks.classList.remove('active');
+    
+    // Scroll to top
+    window.scrollTo(0, 0);
+}
+
+// Audio on first click
+document.addEventListener("click", () => {
+    document.getElementById("bgmusic").play().catch(() => {});
+}, { once: true });
+
+// Sparkles
 function createSparkle() {
     const sparkle = document.createElement("div");
     sparkle.className = "sparkle";
-
     sparkle.style.left = Math.random() * window.innerWidth + "px";
     sparkle.style.top = Math.random() * window.innerHeight + "px";
-
     document.body.appendChild(sparkle);
-
     setTimeout(() => sparkle.remove(), 2000);
 }
 
 setInterval(createSparkle, 120);
-</script>
 
-<script>
-// Shaphan click handler - creates burst effect
+// Shaphan burst effect
 document.getElementById("shaphan").addEventListener("click", function(e) {
     e.stopPropagation();
     e.preventDefault();
@@ -159,7 +516,6 @@ document.getElementById("shaphan").addEventListener("click", function(e) {
     const centerX = shaphanRect.left + shaphanRect.width / 2;
     const centerY = shaphanRect.top + shaphanRect.height / 2;
     
-    // Create burst sparkles in all directions
     for (let i = 0; i < 12; i++) {
         const angle = (i / 12) * Math.PI * 2;
         const distance = 150;
@@ -170,10 +526,8 @@ document.getElementById("shaphan").addEventListener("click", function(e) {
         sparkle.className = "burst-sparkle";
         sparkle.style.left = centerX + "px";
         sparkle.style.top = centerY + "px";
-        
         document.body.appendChild(sparkle);
         
-        // Use transform directly instead of CSS variables
         let elapsed = 0;
         const startTime = Date.now();
         const duration = 1000;
@@ -199,9 +553,108 @@ document.getElementById("shaphan").addEventListener("click", function(e) {
         
         animate();
     }
-    
-    console.log("Shaphan clicked! 🎉");
 });
+
+// Local Storage Functions
+function saveQuote(name, email, text) {
+    const quotes = JSON.parse(localStorage.getItem('quotes') || '[]');
+    quotes.unshift({
+        name,
+        email,
+        text,
+        timestamp: new Date().toLocaleString()
+    });
+    localStorage.setItem('quotes', JSON.stringify(quotes));
+    renderQuotes();
+}
+
+function saveMessage(name, email, text) {
+    const messages = JSON.parse(localStorage.getItem('messages') || '[]');
+    messages.unshift({
+        name,
+        email,
+        text,
+        timestamp: new Date().toLocaleString()
+    });
+    localStorage.setItem('messages', JSON.stringify(messages));
+    renderMessages();
+}
+
+function renderQuotes() {
+    const quotes = JSON.parse(localStorage.getItem('quotes') || '[]');
+    const container = document.getElementById('quotesDisplay');
+    
+    if (quotes.length === 0) {
+        container.innerHTML = '<div class="no-messages">No quotes yet. Be the first!</div>';
+        return;
+    }
+    
+    container.innerHTML = quotes.map(quote => `
+        <div class="message-card">
+            <div class="message-name">${escapeHtml(quote.name)}</div>
+            <div class="message-email">${escapeHtml(quote.email)}</div>
+            <div class="message-text">${escapeHtml(quote.text)}</div>
+            <div class="message-time">${quote.timestamp}</div>
+        </div>
+    `).join('');
+}
+
+function renderMessages() {
+    const messages = JSON.parse(localStorage.getItem('messages') || '[]');
+    const container = document.getElementById('messagesDisplay');
+    
+    if (messages.length === 0) {
+        container.innerHTML = '<div class="no-messages">No messages yet.</div>';
+        return;
+    }
+    
+    container.innerHTML = messages.map(msg => `
+        <div class="message-card">
+            <div class="message-name">${escapeHtml(msg.name)}</div>
+            <div class="message-email">${escapeHtml(msg.email)}</div>
+            <div class="message-text">${escapeHtml(msg.text)}</div>
+            <div class="message-time">${msg.timestamp}</div>
+        </div>
+    `).join('');
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Form Handlers
+document.getElementById('quotesForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('quoteName').value;
+    const email = document.getElementById('quoteEmail').value;
+    const text = document.getElementById('quoteText').value;
+    
+    saveQuote(name, email, text);
+    document.getElementById('quotesForm').reset();
+    
+    // Show success message
+    alert('Quote submitted! 🎉');
+});
+
+document.getElementById('messagesForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('msgName').value;
+    const email = document.getElementById('msgEmail').value;
+    const text = document.getElementById('msgText').value;
+    
+    saveMessage(name, email, text);
+    document.getElementById('messagesForm').reset();
+    
+    // Show success message
+    alert('Message sent! 💌');
+});
+
+// Initial render
+renderQuotes();
+renderMessages();
 </script>
+
 </body>
 </html>
