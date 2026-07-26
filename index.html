@@ -54,6 +54,7 @@ body {
     z-index: 3;
     cursor: pointer;
     transition: transform 0.2s ease;
+    touch-action: manipulation;
 }
 
 .corner:hover {
@@ -88,7 +89,6 @@ body {
     box-shadow:
         0 0 10px hotpink,
         0 0 20px hotpink;
-    animation: burst 1s ease-out forwards;
 }
 
 @keyframes sparkle {
@@ -98,17 +98,6 @@ body {
     }
     to {
         transform: translateY(-150px) scale(0);
-        opacity: 0;
-    }
-}
-
-@keyframes burst {
-    from {
-        transform: translate(0, 0) scale(1);
-        opacity: 1;
-    }
-    to {
-        transform: var(--tx) var(--ty) scale(0);
         opacity: 0;
     }
 }
@@ -164,6 +153,7 @@ setInterval(createSparkle, 120);
 // Shaphan click handler - creates burst effect
 document.getElementById("shaphan").addEventListener("click", function(e) {
     e.stopPropagation();
+    e.preventDefault();
     
     const shaphanRect = this.getBoundingClientRect();
     const centerX = shaphanRect.left + shaphanRect.width / 2;
@@ -180,15 +170,36 @@ document.getElementById("shaphan").addEventListener("click", function(e) {
         sparkle.className = "burst-sparkle";
         sparkle.style.left = centerX + "px";
         sparkle.style.top = centerY + "px";
-        sparkle.style.setProperty("--tx", `translateX(${tx}px)`);
-        sparkle.style.setProperty("--ty", `translateY(${ty}px)`);
         
         document.body.appendChild(sparkle);
         
-        setTimeout(() => sparkle.remove(), 1000);
+        // Use transform directly instead of CSS variables
+        let elapsed = 0;
+        const startTime = Date.now();
+        const duration = 1000;
+        
+        function animate() {
+            elapsed = Date.now() - startTime;
+            const progress = elapsed / duration;
+            
+            if (progress < 1) {
+                const currentTx = tx * progress;
+                const currentTy = ty * progress;
+                const scale = 1 - progress;
+                const opacity = 1 - progress;
+                
+                sparkle.style.transform = `translate(${currentTx}px, ${currentTy}px) scale(${scale})`;
+                sparkle.style.opacity = opacity;
+                
+                requestAnimationFrame(animate);
+            } else {
+                sparkle.remove();
+            }
+        }
+        
+        animate();
     }
     
-    // Optional: Add a fun message or action here
     console.log("Shaphan clicked! 🎉");
 });
 </script>
