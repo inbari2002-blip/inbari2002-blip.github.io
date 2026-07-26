@@ -52,6 +52,16 @@ body {
     width: 200px;
     height: auto;
     z-index: 3;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.corner:hover {
+    transform: scale(1.1);
+}
+
+.corner:active {
+    transform: scale(0.95);
 }
 
 .sparkle {
@@ -68,6 +78,19 @@ body {
     animation: sparkle 2s linear forwards;
 }
 
+.burst-sparkle {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: hotpink;
+    border-radius: 50%;
+    pointer-events: none;
+    box-shadow:
+        0 0 10px hotpink,
+        0 0 20px hotpink;
+    animation: burst 1s ease-out forwards;
+}
+
 @keyframes sparkle {
     from {
         transform: translateY(0) scale(1);
@@ -75,6 +98,17 @@ body {
     }
     to {
         transform: translateY(-150px) scale(0);
+        opacity: 0;
+    }
+}
+
+@keyframes burst {
+    from {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    to {
+        transform: var(--tx) var(--ty) scale(0);
         opacity: 0;
     }
 }
@@ -98,7 +132,7 @@ body {
     #rishonrishon
 </div>
 
-<img src="shaphan.png" class="corner" alt="Corner">
+<img src="shaphan.png" class="corner" alt="Corner" id="shaphan">
 
 <audio id="bgmusic" loop>
     <source src="agas.mp3" type="audio/mpeg">
@@ -124,6 +158,39 @@ function createSparkle() {
 }
 
 setInterval(createSparkle, 120);
+</script>
+
+<script>
+// Shaphan click handler - creates burst effect
+document.getElementById("shaphan").addEventListener("click", function(e) {
+    e.stopPropagation();
+    
+    const shaphanRect = this.getBoundingClientRect();
+    const centerX = shaphanRect.left + shaphanRect.width / 2;
+    const centerY = shaphanRect.top + shaphanRect.height / 2;
+    
+    // Create burst sparkles in all directions
+    for (let i = 0; i < 12; i++) {
+        const angle = (i / 12) * Math.PI * 2;
+        const distance = 150;
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+        
+        const sparkle = document.createElement("div");
+        sparkle.className = "burst-sparkle";
+        sparkle.style.left = centerX + "px";
+        sparkle.style.top = centerY + "px";
+        sparkle.style.setProperty("--tx", `translateX(${tx}px)`);
+        sparkle.style.setProperty("--ty", `translateY(${ty}px)`);
+        
+        document.body.appendChild(sparkle);
+        
+        setTimeout(() => sparkle.remove(), 1000);
+    }
+    
+    // Optional: Add a fun message or action here
+    console.log("Shaphan clicked! 🎉");
+});
 </script>
 </body>
 </html>
