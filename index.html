@@ -287,15 +287,9 @@ nav {
     box-shadow: 0 0 10px rgba(255, 20, 147, 0.3);
 }
 
-.message-name {
+.message-author {
     color: #ff1493;
     font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.message-email {
-    color: #ff69b4;
-    font-size: 14px;
     margin-bottom: 10px;
 }
 
@@ -405,24 +399,20 @@ audio {
         <div class="form-container">
             <form id="quotesForm">
                 <div class="form-group">
-                    <label for="quoteName">Name</label>
-                    <input type="text" id="quoteName" placeholder="Your name" required>
+                    <label for="quoteAuthor">מי אמר</label>
+                    <input type="text" id="quoteAuthor" placeholder="השם של מי שאמר..." required>
                 </div>
                 <div class="form-group">
-                    <label for="quoteEmail">Email</label>
-                    <input type="email" id="quoteEmail" placeholder="Your email" required>
+                    <label for="quoteText">מה הציטוט</label>
+                    <textarea id="quoteText" placeholder="הציטוט..." required></textarea>
                 </div>
-                <div class="form-group">
-                    <label for="quoteText">Quote</label>
-                    <textarea id="quoteText" placeholder="Share your quote..." required></textarea>
-                </div>
-                <button type="submit" class="submit-btn">Submit Quote</button>
+                <button type="submit" class="submit-btn">שלח ציטוט</button>
             </form>
         </div>
 
-        <h2 style="color: #ff1493; margin-top: 40px; margin-bottom: 20px;">Submitted Quotes</h2>
+        <h2 style="color: #ff1493; margin-top: 40px; margin-bottom: 20px;">ציטוטים</h2>
         <div class="messages-container" id="quotesDisplay">
-            <div class="no-messages">No quotes yet. Be the first!</div>
+            <div class="no-messages">אין ציטוטים עדיין. היה הראשון!</div>
         </div>
     </div>
 </div>
@@ -434,14 +424,6 @@ audio {
         
         <div class="form-container">
             <form id="messagesForm">
-                <div class="form-group">
-                    <label for="msgName">Name</label>
-                    <input type="text" id="msgName" placeholder="Your name" required>
-                </div>
-                <div class="form-group">
-                    <label for="msgEmail">Email</label>
-                    <input type="email" id="msgEmail" placeholder="Your email" required>
-                </div>
                 <div class="form-group">
                     <label for="msgText">Message</label>
                     <textarea id="msgText" placeholder="Your message..." required></textarea>
@@ -556,11 +538,10 @@ document.getElementById("shaphan").addEventListener("click", function(e) {
 });
 
 // Local Storage Functions
-function saveQuote(name, email, text) {
+function saveQuote(author, text) {
     const quotes = JSON.parse(localStorage.getItem('quotes') || '[]');
     quotes.unshift({
-        name,
-        email,
+        author,
         text,
         timestamp: new Date().toLocaleString()
     });
@@ -568,11 +549,9 @@ function saveQuote(name, email, text) {
     renderQuotes();
 }
 
-function saveMessage(name, email, text) {
+function saveMessage(text) {
     const messages = JSON.parse(localStorage.getItem('messages') || '[]');
     messages.unshift({
-        name,
-        email,
         text,
         timestamp: new Date().toLocaleString()
     });
@@ -585,15 +564,14 @@ function renderQuotes() {
     const container = document.getElementById('quotesDisplay');
     
     if (quotes.length === 0) {
-        container.innerHTML = '<div class="no-messages">No quotes yet. Be the first!</div>';
+        container.innerHTML = '<div class="no-messages">אין ציטוטים עדיין. היה הראשון!</div>';
         return;
     }
     
     container.innerHTML = quotes.map(quote => `
         <div class="message-card">
-            <div class="message-name">${escapeHtml(quote.name)}</div>
-            <div class="message-email">${escapeHtml(quote.email)}</div>
-            <div class="message-text">${escapeHtml(quote.text)}</div>
+            <div class="message-author">${escapeHtml(quote.author)}</div>
+            <div class="message-text">"${escapeHtml(quote.text)}"</div>
             <div class="message-time">${quote.timestamp}</div>
         </div>
     `).join('');
@@ -610,8 +588,6 @@ function renderMessages() {
     
     container.innerHTML = messages.map(msg => `
         <div class="message-card">
-            <div class="message-name">${escapeHtml(msg.name)}</div>
-            <div class="message-email">${escapeHtml(msg.email)}</div>
             <div class="message-text">${escapeHtml(msg.text)}</div>
             <div class="message-time">${msg.timestamp}</div>
         </div>
@@ -627,24 +603,21 @@ function escapeHtml(text) {
 // Form Handlers
 document.getElementById('quotesForm').addEventListener('submit', (e) => {
     e.preventDefault();
-    const name = document.getElementById('quoteName').value;
-    const email = document.getElementById('quoteEmail').value;
+    const author = document.getElementById('quoteAuthor').value;
     const text = document.getElementById('quoteText').value;
     
-    saveQuote(name, email, text);
+    saveQuote(author, text);
     document.getElementById('quotesForm').reset();
     
     // Show success message
-    alert('Quote submitted! 🎉');
+    alert('ציטוט נשלח! 🎉');
 });
 
 document.getElementById('messagesForm').addEventListener('submit', (e) => {
     e.preventDefault();
-    const name = document.getElementById('msgName').value;
-    const email = document.getElementById('msgEmail').value;
     const text = document.getElementById('msgText').value;
     
-    saveMessage(name, email, text);
+    saveMessage(text);
     document.getElementById('messagesForm').reset();
     
     // Show success message
