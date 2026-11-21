@@ -1,646 +1,273 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="he" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>kacki.store</title>
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="description" content="מדריך חורפי לסופיה עם מסלול גמיש ורשימת אריזה.">
+<title>סופיה בחורף</title>
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html, body {
-    width: 100%;
-    height: 100%;
-    font-family: Arial, sans-serif;
-    background: #0a0a0a;
-    color: #fff;
-}
-
-/* Navigation */
-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: rgba(10, 10, 10, 0.95);
-    padding: 15px 20px;
-    z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 2px solid #ff1493;
-}
-
-.nav-brand {
-    font-size: 24px;
-    font-weight: bold;
-    color: #ff1493;
-    text-shadow: 0 0 10px #ff1493;
-    cursor: pointer;
-}
-
-.nav-links {
-    display: flex;
-    gap: 30px;
-    list-style: none;
-}
-
-.nav-links a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 16px;
-    transition: color 0.3s;
-    cursor: pointer;
-}
-
-.nav-links a:hover {
-    color: #ff1493;
-    text-shadow: 0 0 10px #ff1493;
-}
-
-.hamburger {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-    z-index: 1001;
-}
-
-.hamburger span {
-    width: 25px;
-    height: 3px;
-    background: #ff1493;
-    margin: 5px 0;
-    border-radius: 2px;
-    transition: 0.3s;
-}
-
-/* Pages */
-.page {
-    display: none;
-    padding-top: 70px;
-    min-height: 100vh;
-    position: relative;
-    z-index: 1;
-}
-
-.page.active {
-    display: block;
-}
-
-/* Home Page */
-#home {
-    position: relative;
-    overflow: hidden;
-}
-
-.background {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 1;
-    top: 0;
-}
-
-.home-content {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: calc(100vh - 70px);
-}
-
-.text {
-    font-size: 70px;
-    font-weight: bold;
-    color: #ff1493;
-    text-shadow:
-        0 0 10px #ff1493,
-        0 0 20px #ff1493,
-        0 0 40px #ff1493;
-    animation: spin 4s linear infinite;
-    text-align: center;
-}
-
-.corner {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 200px;
-    height: auto;
-    z-index: 500;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-    touch-action: manipulation;
-}
-
-.corner:hover {
-    transform: scale(1.1);
-}
-
-.corner:active {
-    transform: scale(0.95);
-}
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-/* Sparkles */
-.sparkle {
-    position: fixed;
-    width: 8px;
-    height: 8px;
-    background: white;
-    border-radius: 50%;
-    pointer-events: none;
-    box-shadow:
-        0 0 8px white,
-        0 0 16px #ff1493,
-        0 0 24px #ff1493;
-    animation: sparkle 2s linear forwards;
-    z-index: 999;
-}
-
-.burst-sparkle {
-    position: fixed;
-    width: 10px;
-    height: 10px;
-    background: #ff1493;
-    border-radius: 50%;
-    pointer-events: none;
-    box-shadow:
-        0 0 10px #ff1493,
-        0 0 20px #ff1493;
-    z-index: 999;
-}
-
-@keyframes sparkle {
-    from {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-    }
-    to {
-        transform: translateY(-150px) scale(0);
-        opacity: 0;
-    }
-}
-
-/* Form Pages */
-.page-content {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 40px 20px;
-    background: rgba(10, 10, 10, 0.8);
-    position: relative;
-    z-index: 2;
-}
-
-.page-title {
-    font-size: 48px;
-    font-weight: bold;
-    color: #ff1493;
-    text-shadow: 0 0 10px #ff1493;
-    margin-bottom: 40px;
-    text-align: center;
-}
-
-.form-container {
-    background: rgba(30, 30, 30, 0.9);
-    border: 2px solid #ff1493;
-    border-radius: 10px;
-    padding: 30px;
-    margin-bottom: 40px;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    color: #ff1493;
-    font-weight: bold;
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 12px;
-    background: rgba(255, 20, 147, 0.1);
-    border: 1px solid #ff1493;
-    border-radius: 5px;
-    color: #fff;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-}
-
-.form-group textarea {
-    resize: vertical;
-    min-height: 120px;
-}
-
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-    color: #ff1493;
-    opacity: 0.6;
-}
-
-.submit-btn {
-    background: linear-gradient(135deg, #ff1493, #ff69b4);
-    color: #fff;
-    border: none;
-    padding: 12px 30px;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s;
-    box-shadow: 0 0 15px #ff1493;
-}
-
-.submit-btn:hover {
-    box-shadow: 0 0 25px #ff1493;
-    transform: scale(1.05);
-}
-
-.submit-btn:active {
-    transform: scale(0.98);
-}
-
-/* Messages Display */
-.messages-container {
-    display: grid;
-    gap: 20px;
-}
-
-.message-card {
-    background: rgba(30, 30, 30, 0.9);
-    border-left: 4px solid #ff1493;
-    border-radius: 5px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(255, 20, 147, 0.3);
-}
-
-.message-author {
-    color: #ff1493;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.message-text {
-    color: #fff;
-    line-height: 1.6;
-    margin-bottom: 10px;
-}
-
-.message-time {
-    color: #999;
-    font-size: 12px;
-}
-
-.no-messages {
-    text-align: center;
-    color: #ff1493;
-    padding: 40px 20px;
-    font-size: 18px;
-}
-
-/* Audio */
-audio {
-    display: none;
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-    .nav-links {
-        display: none;
-        position: absolute;
-        top: 70px;
-        left: 0;
-        right: 0;
-        flex-direction: column;
-        background: rgba(10, 10, 10, 0.95);
-        padding: 20px;
-        gap: 15px;
-        border-bottom: 2px solid #ff1493;
-    }
-
-    .nav-links.active {
-        display: flex;
-    }
-
-    .hamburger {
-        display: flex;
-    }
-
-    .text {
-        font-size: 48px;
-    }
-
-    .page-title {
-        font-size: 36px;
-    }
-
-    .corner {
-        width: 150px;
-        bottom: 10px;
-        right: 10px;
-    }
-
-    .form-container {
-        padding: 20px;
-    }
-
-    .form-group input,
-    .form-group textarea {
-        font-size: 16px;
-    }
-}
+:root{color-scheme:light;--ink:#202e25;--muted:#526258;--paper:#f7f4eb;--line:#d9ded2;--green:#183e32;--mint:#cce4cc;--red:#9b362d;--white:#fffdf7}
+*{box-sizing:border-box}
+html{scroll-padding-top:1rem}
+body{margin:0;font:1rem/1.65 system-ui,Arial,sans-serif;color:var(--ink);background:var(--paper)}
+a{color:inherit;text-underline-offset:.2em}
+button,input{font:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid #bc6734;outline-offset:4px}
+.wrap{width:min(69rem,calc(100% - 2rem));margin-inline:auto}
+header{background:var(--green);color:var(--white)}
+nav{display:flex;align-items:center;justify-content:space-between;gap:.7rem;flex-wrap:wrap;padding-block:1rem;border-bottom:1px solid #ffffff40}
+nav div{display:flex;gap:1rem;flex-wrap:wrap}
+nav a{text-decoration:none}
+nav a:hover{text-decoration:underline}
+.hero{display:grid;grid-template-columns:1.2fr 1fr;gap:2rem;align-items:center;padding-block:clamp(2.5rem,8vw,6rem)}
+.hero p{max-width:34ch}
+.eyebrow{color:var(--mint);font-weight:700}
+h1,h2,h3,p{margin-block:0 .6rem}
+h1{font-size:clamp(3.3rem,10vw,7rem);line-height:.98;letter-spacing:-.065em;margin-bottom:1.3rem}
+h2{font-size:clamp(1.85rem,4vw,2.7rem);line-height:1.2}
+h3{font-size:1.2rem}
+.timer{background:var(--white);color:var(--ink);padding:clamp(1rem,4vw,1.7rem);border-radius:1.4rem;box-shadow:0 .7rem 2rem #102b2355}
+.timer small,.muted{color:var(--muted)}
+.clock{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.3rem;margin-block:1rem;text-align:center}
+.clock div{background:#eaf0e5;border-radius:.65rem;padding:.45rem .15rem}
+.clock strong{display:block;font-size:clamp(1.2rem,4vw,2rem);font-variant-numeric:tabular-nums}
+.clock span{font-size:.85rem}
+[hidden]{display:none!important}
+summary{cursor:pointer;font-weight:700}
+.form-row{display:flex;flex-wrap:wrap;align-items:end;gap:.65rem;margin:.8rem 0}
+.form-row label{display:grid;gap:.2rem;min-width:0}
+input[type=date],input[type=time]{min-width:0;max-width:100%;padding:.45rem;border-radius:.5rem;border:1px solid #829388;background:white;color:var(--ink)}
+.btn{border:1px solid var(--green);border-radius:2rem;background:var(--green);color:white;padding:.5rem 1rem;font-weight:700}
+.btn.secondary{background:transparent;color:var(--green)}
+main>section{padding-block:2.3rem;border-bottom:1px solid var(--line)}
+.section-head{display:flex;justify-content:space-between;align-items:start;gap:1rem;flex-wrap:wrap;margin-bottom:1.2rem}
+.days,.pack-grid,.links{display:grid;gap:1rem}
+.days{grid-template-columns:repeat(2,minmax(0,1fr))}
+.card{background:var(--white);border:1px solid var(--line);border-radius:1rem;padding:1.15rem}
+.day-tag{color:var(--red);font-weight:700;font-size:.9rem}
+.card ul{margin:.7rem 0 0;padding-inline-start:1.25rem}
+.card li+li{margin-top:.35rem}
+.pack-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+fieldset{margin:0;min-inline-size:0}
+legend{font-weight:700;padding-inline:.4rem}
+.check{display:flex;align-items:start;gap:.55rem;padding:.25rem 0;cursor:pointer}
+input[type=checkbox]{accent-color:var(--green);width:1.1rem;height:1.1rem;flex:none;margin-top:.3rem}
+.check:has(:checked) span{text-decoration:line-through;color:var(--muted)}
+progress{display:block;width:min(22rem,100%);height:.8rem;accent-color:var(--green);margin-top:.45rem}
+.links{grid-template-columns:repeat(3,minmax(0,1fr))}
+.links a{font-weight:700}
+footer{padding-block:1.5rem;color:var(--muted)}
+@media(max-width:46rem){.hero,.pack-grid,.links{grid-template-columns:1fr}.hero{gap:1.3rem}}
+@media(max-width:34rem){.days{grid-template-columns:1fr}}
+@media print{header{background:white;color:black}.hero{display:block;padding-block:0}.hero h1{font-size:2.5rem}.eyebrow{color:black}.timer,nav,#packing,#links,footer,.btn{display:none!important}main>section{border:0}.card{break-inside:avoid}.days{display:block}.days .card{margin-bottom:.5rem}body{background:white}}
 </style>
 </head>
-
 <body>
-
-<!-- Navigation -->
-<nav>
-    <div class="nav-brand" onclick="showPage('home')">kacki.store</div>
-    <ul class="nav-links" id="navLinks">
-        <li><a onclick="showPage('home')">Home</a></li>
-        <li><a onclick="showPage('quotes')">ציטוטים</a></li>
-        <li><a onclick="showPage('messages')">Messages</a></li>
-    </ul>
-    <div class="hamburger" id="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-</nav>
-
-<!-- Home Page -->
-<div id="home" class="page active">
-    <img src="picture.jpg" class="background" alt="Background">
-    <div class="home-content">
-        <div class="text">#rishonrishon</div>
-    </div>
-    <img src="shaphan.png" class="corner" alt="Corner" id="shaphan">
+<header>
+<div class="wrap">
+<nav aria-label="ניווט ראשי"><strong>סופיה בחורף</strong><div><a href="#plan">מסלול</a><a href="#packing">אריזה</a><a href="#links">קישורים</a></div></nav>
+<div class="hero">
+<div><p class="eyebrow">בולגריה בחורף</p><h1>סופיה<br>בחורף</h1><p>קפה ארוך, יין חם ושני שווקי חג. ארבעה ימים בקצב שלכם, עם מקום ללילה אחד גדול.</p></div>
+<section class="timer" aria-labelledby="timer-title">
+<h2 id="timer-title">עד ההמראה</h2>
+<p id="departure-status">הגדירו מועד המראה כדי להפעיל את הספירה.</p>
+<div class="clock" id="clock" hidden>
+<div><strong id="days-left">0</strong><span>ימים</span></div>
+<div><strong id="hours-left">00</strong><span>שעות</span></div>
+<div><strong id="minutes-left">00</strong><span>דקות</span></div>
+<div><strong id="seconds-left">00</strong><span>שניות</span></div>
 </div>
-
-<!-- Quotes Page -->
-<div id="quotes" class="page">
-    <div class="page-content">
-        <h1 class="page-title">ציטוטים</h1>
-        
-        <div class="form-container">
-            <form id="quotesForm">
-                <div class="form-group">
-                    <label for="quoteAuthor">מי אמר</label>
-                    <input type="text" id="quoteAuthor" placeholder="השם של מי שאמר..." required>
-                </div>
-                <div class="form-group">
-                    <label for="quoteText">מה הציטוט</label>
-                    <textarea id="quoteText" placeholder="הציטוט..." required></textarea>
-                </div>
-                <button type="submit" class="submit-btn">שלח ציטוט</button>
-            </form>
-        </div>
-
-        <h2 style="color: #ff1493; margin-top: 40px; margin-bottom: 20px;">ציטוטים</h2>
-        <div class="messages-container" id="quotesDisplay">
-            <div class="no-messages">אין ציטוטים עדיין. היה הראשון!</div>
-        </div>
-    </div>
+<details id="settings">
+<summary>הגדרת מועד המראה</summary>
+<form id="departure-form" autocomplete="off">
+<div class="form-row">
+<label>תאריך <input id="departure-date" type="date" required></label>
+<label>שעה בתל אביב <input id="departure-time" type="time" required></label>
 </div>
-
-<!-- Messages Page -->
-<div id="messages" class="page">
-    <div class="page-content">
-        <h1 class="page-title">Messages</h1>
-        
-        <div class="form-container">
-            <form id="messagesForm">
-                <div class="form-group">
-                    <label for="msgText">Message</label>
-                    <textarea id="msgText" placeholder="Your message..." required></textarea>
-                </div>
-                <button type="submit" class="submit-btn">Send Message</button>
-            </form>
-        </div>
-
-        <h2 style="color: #ff1493; margin-top: 40px; margin-bottom: 20px;">Messages</h2>
-        <div class="messages-container" id="messagesDisplay">
-            <div class="no-messages">No messages yet.</div>
-        </div>
-    </div>
+<button type="submit" class="btn">שמירה</button>
+<button type="button" class="btn secondary" id="clear-departure" hidden>מחיקת מועד</button>
+<p><small>המועד נשמר בדפדפן הזה בלבד.</small></p>
+<p id="departure-message" role="status"></p>
+</form>
+</details>
+</section>
 </div>
-
-<!-- Audio -->
-<audio id="bgmusic" loop>
-    <source src="agas.mp3" type="audio/mpeg">
-</audio>
-
+</div>
+</header>
+<main class="wrap">
+<section id="plan">
+<div class="section-head"><div><h2>המסלול</h2><p class="muted">הצעה גמישה לפי ימי הטיול. אפשר להחליף בין השווקים לפי מזג האוויר.</p></div><button id="print" class="btn secondary" type="button">הדפסת מסלול</button></div>
+<div class="days">
+<article class="card"><p class="day-tag">יום 1 · שישי</p><h3>נחיתה, קפה ויין חם</h3><ul><li>אם יש זמן עד קבלת הדירה, התחילו בארוחה קלה ובדקו מראש אפשרות לשמירת מזוודות.</li><li>אחרי מנוחה, טיילו בשדרות ויטושה.</li><li>בערב, השוק הגרמני בגן העיר וארוחת ערב במרכז.</li></ul></article>
+<article class="card"><p class="day-tag">יום 2 · שבת</p><h3>העיר העתיקה ולילה בחוץ</h3><ul><li>בראנץ׳ מאוחר, קתדרלת אלכסנדר נבסקי וגני התיאטרון הלאומי.</li><li>חזרו להתחמם ולנוח לפני היציאה.</li><li>התחילו בבר קוקטיילים. אם בא לכם לרקוד, בחרו מסיבה לפי הליינאפ של אותו לילה.</li></ul></article>
+<article class="card"><p class="day-tag">יום 3 · ראשון</p><h3>בוקר איטי וכפר חג מולד</h3><ul><li>קפה מאוחר וסיבוב בסרדיקה. אם גשום, בדקו תערוכה ב־Kvadrat 500.</li><li>לקראת ערב לכו ל־Sofia Christmas Fest בפארק NDK. החלקה על הקרח היא אופציה.</li><li>סיימו בארוחת ערב בולגרית.</li></ul></article>
+<article class="card"><p class="day-tag">יום 4 · שני</p><h3>יום אחרון בלי לרוץ</h3><ul><li>סגרו מראש איפה משאירים את המזוודה אחרי הצ׳ק־אאוט, ומתי אפשר לאסוף אותה.</li><li>בחרו בין קפה וקניות בוויטושה לסיבוב רגוע בגן העיר.</li><li>אם הטיסה מוקדמת למחרת, תכננו מקום לשהות בו אחרי הארוחה והזמינו הסעה שמתאימה לכל הקבוצה ולמזוודה.</li></ul></article>
+</div>
+</section>
+<section id="packing">
+<div class="section-head"><div><h2>מה אורזים</h2><p class="muted">סמנו מה כבר בפנים. הסימונים נשמרים בדפדפן הזה.</p><label for="packed" id="packed-label">0 פריטים ארוזים</label><progress id="packed" value="0" max="1"></progress><p id="packing-message" role="status"></p></div></div>
+<div class="pack-grid">
+<fieldset class="card"><legend>בתיק שעולה למטוס</legend>
+<label class="check"><input type="checkbox" value="passport"><span>דרכון ומסמכי נסיעה זמינים גם אופליין</span></label>
+<label class="check"><input type="checkbox" value="wallet"><span>טלפון, ארנק וכרטיס תשלום</span></label>
+<label class="check"><input type="checkbox" value="battery"><span>סוללה ניידת וכבל</span></label>
+<label class="check"><input type="checkbox" value="meds"><span>תרופות אישיות</span></label>
+<label class="check"><input type="checkbox" value="spare"><span>סט בסיסי להחלפה</span></label>
+</fieldset>
+<fieldset class="card"><legend>בחורף ועל הגוף</legend>
+<label class="check"><input type="checkbox" value="coat"><span>מעיל חם</span></label>
+<label class="check"><input type="checkbox" value="layers"><span>שכבות חמות וגרביים עבים</span></label>
+<label class="check"><input type="checkbox" value="gloves"><span>כובע, כפפות וצעיף</span></label>
+<label class="check"><input type="checkbox" value="shoes"><span>נעליים נוחות שמתאימות גם למדרכות רטובות</span></label>
+<label class="check"><input type="checkbox" value="night"><span>בגד אחד ליציאה בערב</span></label>
+</fieldset>
+<fieldset class="card"><legend>במזוודה המשותפת</legend>
+<label class="check"><input type="checkbox" value="toiletries"><span>ערכת רחצה אחת לקבוצה</span></label>
+<label class="check"><input type="checkbox" value="adapter"><span>מטענים ומתאם לפי הצורך</span></label>
+<label class="check"><input type="checkbox" value="bags"><span>שקיות נפרדות לבגדים של כל אחד</span></label>
+<label class="check"><input type="checkbox" value="space"><span>מקום פנוי לקניות</span></label>
+<label class="check"><input type="checkbox" value="allowance"><span>בדיקת מידות ומשקל הכבודה מול החברה</span></label>
+</fieldset>
+</div>
+</section>
+<section id="links">
+<div class="section-head"><div><h2>לפתוח בדרך</h2><p class="muted">בדקו שעות שוק ותוכנית מסיבות סמוך לנסיעה.</p></div></div>
+<div class="links">
+<div class="card"><a href="https://dev.sofiachristmasfest.bg/en">Sofia Christmas Fest</a><p>שוק חג המולד בפארק NDK ותוכנית האירועים.</p></div>
+<div class="card"><a href="https://www.google.com/maps/search/?api=1&amp;query=City+Garden+Sofia">גן העיר במפה</a><p>אזור השוק הגרמני והתיאטרון הלאומי.</p></div>
+<div class="card"><a href="https://www.google.com/maps/search/?api=1&amp;query=Alexander+Nevsky+Cathedral+Sofia">קתדרלת אלכסנדר נבסקי</a><p>נקודת התחלה לסיבוב במרכז.</p></div>
+</div>
+</section>
+</main>
+<footer class="wrap">סופיה בחורף</footer>
+<noscript><p class="wrap">יש להפעיל JavaScript כדי להשתמש בספירה לאחור ולשמור את הסימונים.</p></noscript>
 <script>
-// Navigation
-const hamburger = document.getElementById('hamburger');
-const navLinks = document.getElementById('navLinks');
+"use strict";
 
-hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
+const byId = (id) => document.getElementById(id);
+const departureKey = "sofia-winter.departure.v1";
+const packingKey = "sofia-winter.packing.v1";
+
+function readStorage(key, fallback) {
+  try {
+    return JSON.parse(localStorage.getItem(key)) ?? fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function updateStorage(key, value) {
+  try {
+    if (value === null) localStorage.removeItem(key);
+    else localStorage.setItem(key, JSON.stringify(value));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+const israelTime = new Intl.DateTimeFormat("sv-SE", {
+  timeZone: "Asia/Jerusalem",
+  year: "numeric", month: "2-digit", day: "2-digit",
+  hour: "2-digit", minute: "2-digit", hourCycle: "h23"
 });
 
-// Close menu when link is clicked
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-    });
+function wallTimeAt(timestamp) {
+  const parts = Object.fromEntries(israelTime.formatToParts(timestamp)
+    .map(({type, value}) => [type, value]));
+  return [parts.year, parts.month, parts.day].join("-") + "T" +
+    [parts.hour, parts.minute].join(":");
+}
+
+function departureTimestamp(date, time) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !/^\d{2}:\d{2}$/.test(time)) return NaN;
+  const wall = date + "T" + time;
+  const guess = Date.parse(wall + "Z");
+  if (!Number.isFinite(guess)) return NaN;
+  const offsets = [2, 3].map((hours) => guess - hours * 3600000);
+  const matches = offsets.filter((timestamp) => wallTimeAt(timestamp) === wall);
+  return matches.length === 1 ? matches[0] : NaN;
+}
+
+let departure = readStorage(departureKey, {});
+let target = departureTimestamp(departure.date, departure.time);
+
+function renderCountdown() {
+  const configured = Number.isFinite(target);
+  const remaining = Math.ceil((target - Date.now()) / 1000);
+  byId("clock").hidden = !configured || remaining <= 0;
+  byId("clear-departure").hidden = !configured;
+  if (!configured) {
+    byId("departure-status").textContent = "הגדירו מועד המראה כדי להפעיל את הספירה.";
+    return;
+  }
+  const label = new Intl.DateTimeFormat("he-IL", {
+    timeZone: "Asia/Jerusalem", dateStyle: "medium", timeStyle: "short"
+  }).format(target);
+  byId("departure-status").textContent = remaining <= 0
+    ? "מועד ההמראה הגיע ✈"
+    : label + " · שעון ישראל";
+  if (remaining <= 0) return;
+  byId("days-left").textContent = Math.floor(remaining / 86400);
+  byId("hours-left").textContent = String(Math.floor(remaining / 3600) % 24).padStart(2, "0");
+  byId("minutes-left").textContent = String(Math.floor(remaining / 60) % 60).padStart(2, "0");
+  byId("seconds-left").textContent = String(remaining % 60).padStart(2, "0");
+}
+
+if (Number.isFinite(target)) {
+  byId("departure-date").value = departure.date;
+  byId("departure-time").value = departure.time;
+}
+
+byId("departure-form").addEventListener("submit", (event) => {
+  event.preventDefault();
+  const date = byId("departure-date").value;
+  const time = byId("departure-time").value;
+  const timestamp = departureTimestamp(date, time);
+  if (!Number.isFinite(timestamp)) {
+    byId("departure-message").textContent = "השעה אינה חד־משמעית בשעון ישראל. בחרו שעה אחרת.";
+    return;
+  }
+  target = timestamp;
+  const saved = updateStorage(departureKey, {date, time});
+  byId("departure-message").textContent = saved ? "מועד ההמראה נשמר." : "המועד פעיל עד לסגירת הדף.";
+  renderCountdown();
 });
 
-// Page Navigation
-function showPage(pageId) {
-    document.querySelectorAll('.page').forEach(page => {
-        page.classList.remove('active');
-    });
-    document.getElementById(pageId).classList.add('active');
-    navLinks.classList.remove('active');
-    
-    // Scroll to top
-    window.scrollTo(0, 0);
-}
-
-// Audio on first click
-document.addEventListener("click", () => {
-    document.getElementById("bgmusic").play().catch(() => {});
-}, { once: true });
-
-// Sparkles - create continuously on all pages
-function createSparkle() {
-    const sparkle = document.createElement("div");
-    sparkle.className = "sparkle";
-    sparkle.style.left = Math.random() * window.innerWidth + "px";
-    sparkle.style.top = Math.random() * window.innerHeight + "px";
-    document.body.appendChild(sparkle);
-    setTimeout(() => sparkle.remove(), 2000);
-}
-
-// Create sparkles every 120ms on all pages
-setInterval(createSparkle, 120);
-
-// Shaphan burst effect
-document.addEventListener('DOMContentLoaded', () => {
-    const shaphan = document.getElementById("shaphan");
-    if (shaphan) {
-        shaphan.addEventListener("click", function(e) {
-            e.stopPropagation();
-            e.preventDefault();
-            
-            const shaphanRect = this.getBoundingClientRect();
-            const centerX = shaphanRect.left + shaphanRect.width / 2;
-            const centerY = shaphanRect.top + shaphanRect.height / 2;
-            
-            for (let i = 0; i < 12; i++) {
-                const angle = (i / 12) * Math.PI * 2;
-                const distance = 150;
-                const tx = Math.cos(angle) * distance;
-                const ty = Math.sin(angle) * distance;
-                
-                const sparkle = document.createElement("div");
-                sparkle.className = "burst-sparkle";
-                sparkle.style.left = centerX + "px";
-                sparkle.style.top = centerY + "px";
-                document.body.appendChild(sparkle);
-                
-                let elapsed = 0;
-                const startTime = Date.now();
-                const duration = 1000;
-                
-                function animate() {
-                    elapsed = Date.now() - startTime;
-                    const progress = elapsed / duration;
-                    
-                    if (progress < 1) {
-                        const currentTx = tx * progress;
-                        const currentTy = ty * progress;
-                        const scale = 1 - progress;
-                        const opacity = 1 - progress;
-                        
-                        sparkle.style.transform = `translate(${currentTx}px, ${currentTy}px) scale(${scale})`;
-                        sparkle.style.opacity = opacity;
-                        
-                        requestAnimationFrame(animate);
-                    } else {
-                        sparkle.remove();
-                    }
-                }
-                
-                animate();
-            }
-        });
-    }
+byId("clear-departure").addEventListener("click", () => {
+  const cleared = updateStorage(departureKey, null);
+  target = NaN;
+  byId("departure-form").reset();
+  byId("departure-message").textContent = cleared ? "מועד ההמראה נמחק." : "המועד הוסר מהתצוגה. לא הצלחנו לעדכן את אחסון הדפדפן.";
+  renderCountdown();
 });
 
-// Local Storage Functions
-function saveQuote(author, text) {
-    const quotes = JSON.parse(localStorage.getItem('quotes') || '[]');
-    quotes.unshift({
-        author,
-        text,
-        timestamp: new Date().toLocaleString()
-    });
-    localStorage.setItem('quotes', JSON.stringify(quotes));
-    renderQuotes();
+renderCountdown();
+setInterval(renderCountdown, 1000);
+
+const checks = [...document.querySelectorAll("#packing input[type=checkbox]")];
+const savedPacking = readStorage(packingKey, []);
+const packedItems = new Set(Array.isArray(savedPacking) ? savedPacking : []);
+for (const checkbox of checks) checkbox.checked = packedItems.has(checkbox.value);
+
+function renderPacking() {
+  const checked = checks.filter((checkbox) => checkbox.checked);
+  byId("packed").max = checks.length;
+  byId("packed").value = checked.length;
+  byId("packed-label").textContent = checked.length + " מתוך " + checks.length + " פריטים ארוזים";
+  return checked.map((checkbox) => checkbox.value);
 }
 
-function saveMessage(text) {
-    const messages = JSON.parse(localStorage.getItem('messages') || '[]');
-    messages.unshift({
-        text,
-        timestamp: new Date().toLocaleString()
-    });
-    localStorage.setItem('messages', JSON.stringify(messages));
-    renderMessages();
-}
-
-function renderQuotes() {
-    const quotes = JSON.parse(localStorage.getItem('quotes') || '[]');
-    const container = document.getElementById('quotesDisplay');
-    
-    if (quotes.length === 0) {
-        container.innerHTML = '<div class="no-messages">אין ציטוטים עדיין. היה הראשון!</div>';
-        return;
-    }
-    
-    container.innerHTML = quotes.map(quote => `
-        <div class="message-card">
-            <div class="message-author">${escapeHtml(quote.author)}</div>
-            <div class="message-text">"${escapeHtml(quote.text)}"</div>
-            <div class="message-time">${quote.timestamp}</div>
-        </div>
-    `).join('');
-}
-
-function renderMessages() {
-    const messages = JSON.parse(localStorage.getItem('messages') || '[]');
-    const container = document.getElementById('messagesDisplay');
-    
-    if (messages.length === 0) {
-        container.innerHTML = '<div class="no-messages">No messages yet.</div>';
-        return;
-    }
-    
-    container.innerHTML = messages.map(msg => `
-        <div class="message-card">
-            <div class="message-text">${escapeHtml(msg.text)}</div>
-            <div class="message-time">${msg.timestamp}</div>
-        </div>
-    `).join('');
-}
-
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
-
-// Form Handlers
-document.getElementById('quotesForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const author = document.getElementById('quoteAuthor').value;
-    const text = document.getElementById('quoteText').value;
-    
-    saveQuote(author, text);
-    document.getElementById('quotesForm').reset();
-    
-    // Show success message
-    alert('ציטוט נשלח! 🎉');
+byId("packing").addEventListener("change", (event) => {
+  if (!checks.includes(event.target)) return;
+  const saved = updateStorage(packingKey, renderPacking());
+  byId("packing-message").textContent = saved ? "" : "הסימונים יישמרו עד לסגירת הדף.";
 });
 
-document.getElementById('messagesForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const text = document.getElementById('msgText').value;
-    
-    saveMessage(text);
-    document.getElementById('messagesForm').reset();
-    
-    // Show success message
-    alert('Message sent! 💌');
-});
-
-// Initial render
-renderQuotes();
-renderMessages();
+renderPacking();
+byId("print").addEventListener("click", () => window.print());
 </script>
-
 </body>
 </html>
