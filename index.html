@@ -35,10 +35,6 @@ h3{font-size:1.2rem}
 .clock strong{display:block;font-size:clamp(1.2rem,4vw,2rem);font-variant-numeric:tabular-nums}
 .clock span{font-size:.85rem}
 [hidden]{display:none!important}
-summary{cursor:pointer;font-weight:700}
-.form-row{display:flex;flex-wrap:wrap;align-items:end;gap:.65rem;margin:.8rem 0}
-.form-row label{display:grid;gap:.2rem;min-width:0}
-input[type=date],input[type=time]{min-width:0;max-width:100%;padding:.45rem;border-radius:.5rem;border:1px solid #829388;background:white;color:var(--ink)}
 .btn{border:1px solid var(--green);border-radius:2rem;background:var(--green);color:white;padding:.5rem 1rem;font-weight:700}
 .btn.secondary{background:transparent;color:var(--green)}
 main>section{padding-block:2.3rem;border-bottom:1px solid var(--line)}
@@ -61,37 +57,51 @@ progress{display:block;width:min(22rem,100%);height:.8rem;accent-color:var(--gre
 footer{padding-block:1.5rem;color:var(--muted)}
 @media(max-width:46rem){.hero,.pack-grid,.links{grid-template-columns:1fr}.hero{gap:1.3rem}}
 @media(max-width:34rem){.days{grid-template-columns:1fr}}
-@media print{header{background:white;color:black}.hero{display:block;padding-block:0}.hero h1{font-size:2.5rem}.eyebrow{color:black}.timer,nav,#packing,#links,footer,.btn{display:none!important}main>section{border:0}.card{break-inside:avoid}.days{display:block}.days .card{margin-bottom:.5rem}body{background:white}}
+@media print{header{background:white;color:black}.hero{display:block;padding-block:0}.hero h1{font-size:2.5rem}.eyebrow{color:black}.timer,nav,#packing,#links,#ideas,#drinks,footer,.btn{display:none!important}main>section{border:0}.card{break-inside:avoid}.days{display:block}.days .card{margin-bottom:.5rem}body{background:white}}
+/* Winter postcard palette and a soft snow pattern behind the hero. */
+:root{--paper:#f9f3fa;--line:#e6d9ec;--green:#41245d;--mint:#f5cefb;--red:#9d345e;--ink:#302440;--muted:#63526f;--white:#fffaff}
+header{background:radial-gradient(circle at 10px 10px,#fff5 1px,transparent 2px) 0 0/44px 44px,radial-gradient(circle at 15% 40%,#874b92,transparent 45%),linear-gradient(135deg,#262052,#552a67)}
+.hero h1{color:#ffe2a4;text-shadow:.055em .055em #9e5269}
+.timer{border:2px solid #f4cbdc;box-shadow:.5rem .5rem 0 #eaa8cc55;transform:rotate(-1.2deg)}
+.clock{direction:rtl}
+.clock div{background:#f4e5fa}
+.clock div:nth-child(even){background:#fff0cc}
+.card{box-shadow:0 .3rem 0 #e9dcee}
+.day-tag{color:var(--red)}
+.idea-card{position:relative;border-block-start:4px solid #ae76bc}
+.idea-card:nth-child(3n+2){border-block-start-color:#db9d54}
+.idea-card:nth-child(3n){border-block-start-color:#58a68f}
+.idea-card p{min-height:3.2em}
+.idea-icon{display:inline-grid;place-items:center;background:#f8e8fa;border-radius:50%;width:2.7rem;height:2.7rem;font-size:1.4rem;margin-bottom:.6rem}
+.picked{display:inline-block;color:var(--green);background:#ffebad;font-weight:700;padding:.5rem .9rem;border-radius:.65rem;margin-bottom:1rem}
+.drink-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));gap:.65rem}
+.drink-card{text-align:center;background:#fff5e0}
+.drink-controls{display:flex;direction:ltr;align-items:center;justify-content:center;gap:.45rem}
+.drink-controls button{color:var(--green);border:1px solid #c2a6d4;background:var(--white);border-radius:50%;min-width:2.75rem;min-height:2.75rem;font-weight:700}
+.drink-controls button:disabled{opacity:.45;cursor:default}
+.drink-controls output{min-width:2ch;font-weight:700;font-variant-numeric:tabular-nums}
+.total{background:#ead8f5;border-radius:1rem;padding:.45rem .9rem;margin:0}
+.total strong{margin-inline-start:.4rem}
+@media(max-width:46rem){.timer{transform:none}}
+@media print{header{background:white}.hero h1{color:black;text-shadow:none}.card{box-shadow:none}}
 </style>
 </head>
 <body>
 <header>
 <div class="wrap">
-<nav aria-label="ניווט ראשי"><strong>סופיה בחורף</strong><div><a href="#plan">מסלול</a><a href="#packing">אריזה</a><a href="#links">קישורים</a></div></nav>
+<nav aria-label="ניווט ראשי"><strong>סופיה בחורף</strong><div><a href="#plan">מסלול</a><a href="#ideas">רעיונות</a><a href="#drinks">משקאות</a><a href="#packing">אריזה</a><a href="#links">קישורים</a></div></nav>
 <div class="hero">
-<div><p class="eyebrow">בולגריה בחורף</p><h1>סופיה<br>בחורף</h1><p>קפה ארוך, יין חם ושני שווקי חג. ארבעה ימים בקצב שלכם, עם מקום ללילה אחד גדול.</p></div>
+<div><p class="eyebrow">❄ בולגריה בחורף</p><h1>סופיה<br>בחורף</h1><p>קפה ארוך, יין חם ושני שווקי חג. ארבעה ימים בקצב שלכם, עם מקום ללילה אחד גדול.</p></div>
 <section class="timer" aria-labelledby="timer-title">
-<h2 id="timer-title">עד ההמראה</h2>
-<p id="departure-status">הגדירו מועד המראה כדי להפעיל את הספירה.</p>
+<h2 id="timer-title">עוד רגע סופיה</h2>
+<p id="departure-status">4 בדצמבר · 09:15 · שעון ישראל</p>
 <div class="clock" id="clock" hidden>
 <div><strong id="days-left">0</strong><span>ימים</span></div>
 <div><strong id="hours-left">00</strong><span>שעות</span></div>
 <div><strong id="minutes-left">00</strong><span>דקות</span></div>
 <div><strong id="seconds-left">00</strong><span>שניות</span></div>
 </div>
-<details id="settings">
-<summary>הגדרת מועד המראה</summary>
-<form id="departure-form" autocomplete="off">
-<div class="form-row">
-<label>תאריך <input id="departure-date" type="date" required></label>
-<label>שעה בתל אביב <input id="departure-time" type="time" required></label>
-</div>
-<button type="submit" class="btn">שמירה</button>
-<button type="button" class="btn secondary" id="clear-departure" hidden>מחיקת מועד</button>
-<p><small>המועד נשמר בדפדפן הזה בלבד.</small></p>
-<p id="departure-message" role="status"></p>
-</form>
-</details>
+
 </section>
 </div>
 </div>
@@ -105,6 +115,51 @@ footer{padding-block:1.5rem;color:var(--muted)}
 <article class="card"><p class="day-tag">יום 3 · ראשון</p><h3>בוקר איטי וכפר חג מולד</h3><ul><li>קפה מאוחר וסיבוב בסרדיקה. אם גשום, בדקו תערוכה ב־Kvadrat 500.</li><li>לקראת ערב לכו ל־Sofia Christmas Fest בפארק NDK. החלקה על הקרח היא אופציה.</li><li>סיימו בארוחת ערב בולגרית.</li></ul></article>
 <article class="card"><p class="day-tag">יום 4 · שני</p><h3>יום אחרון בלי לרוץ</h3><ul><li>סגרו מראש איפה משאירים את המזוודה אחרי הצ׳ק־אאוט, ומתי אפשר לאסוף אותה.</li><li>בחרו בין קפה וקניות בוויטושה לסיבוב רגוע בגן העיר.</li><li>אם הטיסה מוקדמת למחרת, תכננו מקום לשהות בו אחרי הארוחה והזמינו הסעה שמתאימה לכל הקבוצה ולמזוודה.</li></ul></article>
 </div>
+</section>
+<section id="ideas">
+<div class="section-head"><div><h2>מה בא לנו עכשיו?</h2><p class="muted">רעיונות להחלפה במסלול לפי מזג האוויר ומצב הרוח.</p></div>
+<button id="pick-idea" class="btn" type="button">🎲 תבחרו בשבילנו</button></div>
+<div aria-live="polite"><a id="picked-idea" class="picked" hidden></a></div>
+<div class="links">
+<article class="card idea-card" id="idea-market"><span class="idea-icon" aria-hidden="true">🎄</span><h3>שוק חג המולד והחלקה על הקרח</h3><p>יין חם ודוכנים ב־NDK. אם המשטח פתוח ובא לכם לזוז, הוסיפו סיבוב החלקה.</p><a href="https://www.google.com/maps/search/?api=1&amp;query=Sofia+Christmas+Fest+NDK">פתיחה במפה</a></article>
+<article class="card idea-card" id="idea-food"><span class="idea-icon" aria-hidden="true">🥐</span><h3>סיבוב טעימות בולגרי</h3><p>התחילו בבניצה וקפה, והמשיכו לשוק המקורה במרכז. כל אחד בוחר משהו קטן לשולחן.</p><a href="https://www.google.com/maps/search/?api=1&amp;query=Central+Sofia+Market+Hall">פתיחה במפה</a></article>
+<article class="card idea-card" id="idea-art"><span class="idea-icon" aria-hidden="true">🎨</span><h3>יום גשם ב־Kvadrat 500</h3><p>גלריה ליד אלכסנדר נבסקי. אפשר לשלב עם עצירת קינוח אם הגשם ממשיך.</p><a href="https://www.google.com/maps/search/?api=1&amp;query=Kvadrat+500+Sofia">פתיחה במפה</a></article>
+<article class="card idea-card" id="idea-history"><span class="idea-icon" aria-hidden="true">🏛️</span><h3>סרדיקה מתחת לעיר</h3><p>חפשו את השרידים הרומיים ליד תחנת סרדיקה והמשיכו לכיוון בניין המרחצאות הישן.</p><a href="https://www.google.com/maps/search/?api=1&amp;query=Ancient+Serdica+Complex+Sofia">פתיחה במפה</a></article>
+<article class="card idea-card" id="idea-night"><span class="idea-icon" aria-hidden="true">🪩</span><h3>לילה לפי הליינאפ</h3><p>בחרו בין הופעה, בר קוקטיילים וסט DJ. בדקו מה מתקיים באותו ערב לפני שסוגרים.</p><a href="https://www.google.com/maps/search/?api=1&amp;query=Live+music+clubs+Sofia+city+center">פתיחה במפה</a></article>
+<article class="card idea-card" id="idea-park"><span class="idea-icon" aria-hidden="true">🌲</span><h3>טיול בפארק עם קפה לדרך</h3><p>אם יבש ונעים, קחו משהו חם וצאו להליכה בבוריסובה גרדינה.</p><a href="https://www.google.com/maps/search/?api=1&amp;query=Borisova+Gradina+Sofia">פתיחה במפה</a></article>
+</div>
+</section>
+<section id="drinks">
+<div class="section-head"><div><h2>מה שתינו?</h2><p class="muted">יומן משקאות קטן שנשמר בדפדפן הזה.</p></div>
+<p class="total" aria-live="polite">סה״כ משקאות <strong id="drink-total">0</strong></p></div>
+<div class="drink-grid">
+<div class="card drink-card"><h3>🍷 יין חם</h3><div class="drink-controls">
+<button type="button" id="minus-wine" data-drink="wine" data-delta="-1" aria-label="הפחתת 🍷 יין חם">−</button>
+<output id="count-wine" aria-label="כמות 🍷 יין חם">0</output>
+<button type="button" data-drink="wine" data-delta="1" aria-label="הוספת 🍷 יין חם">+</button>
+</div></div>
+<div class="card drink-card"><h3>🍺 בירה</h3><div class="drink-controls">
+<button type="button" id="minus-beer" data-drink="beer" data-delta="-1" aria-label="הפחתת 🍺 בירה">−</button>
+<output id="count-beer" aria-label="כמות 🍺 בירה">0</output>
+<button type="button" data-drink="beer" data-delta="1" aria-label="הוספת 🍺 בירה">+</button>
+</div></div>
+<div class="card drink-card"><h3>🍸 קוקטייל</h3><div class="drink-controls">
+<button type="button" id="minus-cocktail" data-drink="cocktail" data-delta="-1" aria-label="הפחתת 🍸 קוקטייל">−</button>
+<output id="count-cocktail" aria-label="כמות 🍸 קוקטייל">0</output>
+<button type="button" data-drink="cocktail" data-delta="1" aria-label="הוספת 🍸 קוקטייל">+</button>
+</div></div>
+<div class="card drink-card"><h3>💧 מים</h3><div class="drink-controls">
+<button type="button" id="minus-water" data-drink="water" data-delta="-1" aria-label="הפחתת 💧 מים">−</button>
+<output id="count-water" aria-label="כמות 💧 מים">0</output>
+<button type="button" data-drink="water" data-delta="1" aria-label="הוספת 💧 מים">+</button>
+</div></div>
+<div class="card drink-card"><h3>☕ משקה אחר</h3><div class="drink-controls">
+<button type="button" id="minus-other" data-drink="other" data-delta="-1" aria-label="הפחתת ☕ משקה אחר">−</button>
+<output id="count-other" aria-label="כמות ☕ משקה אחר">0</output>
+<button type="button" data-drink="other" data-delta="1" aria-label="הוספת ☕ משקה אחר">+</button>
+</div></div>
+</div>
+<p id="drink-message" role="status"></p>
 </section>
 <section id="packing">
 <div class="section-head"><div><h2>מה אורזים</h2><p class="muted">סמנו מה כבר בפנים. הסימונים נשמרים בדפדפן הזה.</p><label for="packed" id="packed-label">0 פריטים ארוזים</label><progress id="packed" value="0" max="1"></progress><p id="packing-message" role="status"></p></div></div>
@@ -147,7 +202,6 @@ footer{padding-block:1.5rem;color:var(--muted)}
 "use strict";
 
 const byId = (id) => document.getElementById(id);
-const departureKey = "sofia-winter.departure.v1";
 const packingKey = "sofia-winter.packing.v1";
 
 function readStorage(key, fallback) {
@@ -168,84 +222,62 @@ function updateStorage(key, value) {
   }
 }
 
-const israelTime = new Intl.DateTimeFormat("sv-SE", {
-  timeZone: "Asia/Jerusalem",
-  year: "numeric", month: "2-digit", day: "2-digit",
-  hour: "2-digit", minute: "2-digit", hourCycle: "h23"
-});
-
-function wallTimeAt(timestamp) {
-  const parts = Object.fromEntries(israelTime.formatToParts(timestamp)
-    .map(({type, value}) => [type, value]));
-  return [parts.year, parts.month, parts.day].join("-") + "T" +
-    [parts.hour, parts.minute].join(":");
-}
-
-function departureTimestamp(date, time) {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !/^\d{2}:\d{2}$/.test(time)) return NaN;
-  const wall = date + "T" + time;
-  const guess = Date.parse(wall + "Z");
-  if (!Number.isFinite(guess)) return NaN;
-  const offsets = [2, 3].map((hours) => guess - hours * 3600000);
-  const matches = offsets.filter((timestamp) => wallTimeAt(timestamp) === wall);
-  return matches.length === 1 ? matches[0] : NaN;
-}
-
-let departure = readStorage(departureKey, {});
-let target = departureTimestamp(departure.date, departure.time);
+const countdownTarget = Date.parse("2026-12-04T09:15:00+02:00");
 
 function renderCountdown() {
-  const configured = Number.isFinite(target);
-  const remaining = Math.ceil((target - Date.now()) / 1000);
-  byId("clock").hidden = !configured || remaining <= 0;
-  byId("clear-departure").hidden = !configured;
-  if (!configured) {
-    byId("departure-status").textContent = "הגדירו מועד המראה כדי להפעיל את הספירה.";
+  const remaining = Math.max(0, Math.ceil((countdownTarget - Date.now()) / 1000));
+  byId("clock").hidden = remaining === 0;
+  if (remaining === 0) {
+    byId("departure-status").textContent = "הגיע הזמן לסופיה! ❄";
     return;
   }
-  const label = new Intl.DateTimeFormat("he-IL", {
-    timeZone: "Asia/Jerusalem", dateStyle: "medium", timeStyle: "short"
-  }).format(target);
-  byId("departure-status").textContent = remaining <= 0
-    ? "מועד ההמראה הגיע ✈"
-    : label + " · שעון ישראל";
-  if (remaining <= 0) return;
   byId("days-left").textContent = Math.floor(remaining / 86400);
   byId("hours-left").textContent = String(Math.floor(remaining / 3600) % 24).padStart(2, "0");
   byId("minutes-left").textContent = String(Math.floor(remaining / 60) % 60).padStart(2, "0");
   byId("seconds-left").textContent = String(remaining % 60).padStart(2, "0");
 }
 
-if (Number.isFinite(target)) {
-  byId("departure-date").value = departure.date;
-  byId("departure-time").value = departure.time;
-}
-
-byId("departure-form").addEventListener("submit", (event) => {
-  event.preventDefault();
-  const date = byId("departure-date").value;
-  const time = byId("departure-time").value;
-  const timestamp = departureTimestamp(date, time);
-  if (!Number.isFinite(timestamp)) {
-    byId("departure-message").textContent = "השעה אינה חד־משמעית בשעון ישראל. בחרו שעה אחרת.";
-    return;
-  }
-  target = timestamp;
-  const saved = updateStorage(departureKey, {date, time});
-  byId("departure-message").textContent = saved ? "מועד ההמראה נשמר." : "המועד פעיל עד לסגירת הדף.";
-  renderCountdown();
-});
-
-byId("clear-departure").addEventListener("click", () => {
-  const cleared = updateStorage(departureKey, null);
-  target = NaN;
-  byId("departure-form").reset();
-  byId("departure-message").textContent = cleared ? "מועד ההמראה נמחק." : "המועד הוסר מהתצוגה. לא הצלחנו לעדכן את אחסון הדפדפן.";
-  renderCountdown();
-});
-
 renderCountdown();
 setInterval(renderCountdown, 1000);
+
+const ideaCards = [...document.querySelectorAll(".idea-card")];
+let previousIdea;
+byId("pick-idea").addEventListener("click", () => {
+  const choices = ideaCards.filter((card) => card !== previousIdea);
+  previousIdea = choices[Math.floor(Math.random() * choices.length)];
+  const result = byId("picked-idea");
+  result.textContent = previousIdea.querySelector("h3").textContent;
+  result.href = "#" + previousIdea.id;
+  result.hidden = false;
+});
+
+const drinksKey = "sofia-winter.drinks.v1";
+const drinkTypes = ["wine", "beer", "cocktail", "water", "other"];
+const storedDrinks = readStorage(drinksKey, {});
+const drinks = Object.fromEntries(drinkTypes.map((type) => {
+  const count = storedDrinks[type];
+  return [type, Number.isSafeInteger(count) && count >= 0 ? count : 0];
+}));
+
+function renderDrinks() {
+  for (const type of drinkTypes) {
+    byId("count-" + type).textContent = drinks[type];
+    byId("minus-" + type).disabled = drinks[type] === 0;
+  }
+  byId("drink-total").textContent = Object.values(drinks).reduce((total, count) => total + count, 0);
+}
+
+byId("drinks").addEventListener("click", (event) => {
+  const button = event.target.closest("button[data-drink]");
+  if (!button) return;
+  const type = button.dataset.drink;
+  drinks[type] = Math.max(0, drinks[type] + Number(button.dataset.delta));
+  const saved = updateStorage(drinksKey, drinks);
+  byId("drink-message").textContent = saved ? "" : "הספירה זמינה עד לסגירת הדף.";
+  renderDrinks();
+});
+
+renderDrinks();
 
 const checks = [...document.querySelectorAll("#packing input[type=checkbox]")];
 const savedPacking = readStorage(packingKey, []);
